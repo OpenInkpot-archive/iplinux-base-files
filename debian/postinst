@@ -1,0 +1,131 @@
+#!/bin/sh
+set -e
+
+install_local_dir() {
+  if [ ! -d $1 ]; then
+    mkdir -p $DPKG_SLIND_INSTDIR/$1
+  fi
+  chown root:staff $1 2> /dev/null || true
+  chmod 2775 $1 2> /dev/null || true
+}
+
+install_from_default() {
+  if [ ! -f $2 ]; then
+    cp -p $1 $2
+  fi
+}
+
+install_directory() {
+  if [ ! -d $DPKG_SLIND_INSTDIR/$1 ]; then
+    mkdir $DPKG_SLIND_INSTDIR/$1
+    chown root:$3 $DPKG_SLIND_INSTDIR/$1
+    chmod $2 $DPKG_SLIND_INSTDIR/$1
+  fi
+}
+
+preserve_directory() {
+  if [ -f $DPKG_SLIND_INSTDIR/etc/base-files.create-$1 ]; then
+    install_directory $1 755 root
+    rm -f $DPKG_SLIND_INSTDIR/etc/base-files.create-$1
+  fi
+}
+
+if [ "$1" = "configure" ] && [ "$2" = "" ]; then
+  install_from_default /usr/share/base-files/dot.profile /root/.profile
+  install_from_default /usr/share/base-files/dot.bashrc  /root/.bashrc
+  install_from_default /usr/share/base-files/profile     /etc/profile
+  install_from_default /usr/share/base-files/inputrc     /etc/inputrc
+  install_from_default /usr/share/base-files/motd        /etc/motd
+  install_directory srv       755 root
+  install_directory opt       755 root
+  install_directory etc/opt   755 root
+  install_directory var/opt   755 root
+  install_directory media     755 root
+  install_directory initrd    755 root
+  install_directory var/mail 2775 mail
+  if [ ! -L $DPKG_SLIND_INSTDIR/var/spool/mail ]; then
+    ln -s ../mail $DPKG_SLIND_INSTDIR/var/spool/mail
+  fi
+
+  install_local_dir /usr/local
+  install_local_dir /usr/local/share
+  install_local_dir /usr/local/share/man
+  install_local_dir /usr/local/bin
+  install_local_dir /usr/local/games
+  install_local_dir /usr/local/lib
+  install_local_dir /usr/local/include
+  install_local_dir /usr/local/sbin
+  install_local_dir /usr/local/src
+  ln -sf share/man /usr/local/man
+fi
+
+if [ "$1" = "configure" ] && [ "$2" != "" ]; then
+  if [ ! -d $DPKG_SLIND_INSTDIR/var/spool/mail ] && [ ! -L $DPKG_SLIND_INSTDIR/var/spool/mail ]; then
+    if [ -f $DPKG_SLIND_INSTDIR/etc/base-files.mailsymlink ]; then
+      ln -sf `cat $DPKG_SLIND_INSTDIR/etc/base-files.mailsymlink` $DPKG_SLIND_INSTDIR/var/spool/mail
+    else
+      install_directory var/spool/mail 2775 mail
+    fi
+  fi
+  if [ ! -L $DPKG_SLIND_INSTDIR/var/mail ] && [ ! -d $DPKG_SLIND_INSTDIR/var/mail ]; then
+    ln -sf spool/mail $DPKG_SLIND_INSTDIR/var/mail
+  fi
+fi
+
+preserve_directory floppy
+preserve_directory cdrom
+preserve_directory initrd
+
+if [ ! -f $DPKG_SLIND_INSTDIR/etc/adjtime ]; then
+  echo "0.000000 1121000000 0.000000" > $DPKG_SLIND_INSTDIR/etc/adjtime
+  echo "1121000000" >> $DPKG_SLIND_INSTDIR/etc/adjtime
+  echo "UTC" >> $DPKG_SLIND_INSTDIR/etc/adjtime
+  chmod 644 $DPKG_SLIND_INSTDIR/etc/adjtime
+fi
+
+if [ ! -f $DPKG_SLIND_INSTDIR$DPKG_SLIND_INSTDIR/var/run/utmp ]; then
+  echo -n>$DPKG_SLIND_INSTDIR/var/run/utmp
+fi
+if [ ! -f $DPKG_SLIND_INSTDIR/var/log/wtmp ]; then
+  echo -n>$DPKG_SLIND_INSTDIR/var/log/wtmp
+fi
+if [ ! -f $DPKG_SLIND_INSTDIR/var/log/btmp ]; then
+  echo -n>$DPKG_SLIND_INSTDIR/var/log/btmp
+fi
+if [ ! -f $DPKG_SLIND_INSTDIR/var/log/lastlog ]; then
+  echo -n>$DPKG_SLIND_INSTDIR/var/log/lastlog
+fi
+chown root:utmp $DPKG_SLIND_INSTDIR/var/run/utmp $DPKG_SLIND_INSTDIR/var/log/wtmp $DPKG_SLIND_INSTDIR/var/log/btmp $DPKG_SLIND_INSTDIR/var/log/lastlog
+chmod 664 $DPKG_SLIND_INSTDIR/var/run/utmp $DPKG_SLIND_INSTDIR/var/log/wtmp $DPKG_SLIND_INSTDIR/var/log/btmp $DPKG_SLIND_INSTDIR/var/log/lastlog
+
+if [ ! -d $DPKG_SLIND_INSTDIR/var/lib/dpkg ]; then
+  mkdir -m 755 -p $DPKG_SLIND_INSTDIR/var/lib/dpkg
+  chown root:root $DPKG_SLIND_INSTDIR/var/lib/dpkg
+fi
+if [ ! -f $DPKG_SLIND_INSTDIR/var/lib/dpkg/status ]; then
+  echo > $DPKG_SLIND_INSTDIR/var/lib/dpkg/status
+  chmod 644 $DPKG_SLIND_INSTDIR/var/lib/dpkg/status
+  chown root:root $DPKG_SLIND_INSTDIR/var/lib/dpkg/status
+fi
+
+if [ ! -f $DPKG_SLIND_INSTDIR/usr/info/dir ] && [ ! -f $DPKG_SLIND_INSTDIR/usr/share/info/dir ]; then
+  install_from_default $DPKG_SLIND_INSTDIR/usr/share/base-files/info.dir $DPKG_SLIND_INSTDIR/usr/share/info/dir
+  chmod 644 $DPKG_SLIND_INSTDIR/usr/share/info/dir
+  chown root:root $DPKG_SLIND_INSTDIR/usr/share/info/dir
+fi
+rm -f $DPKG_SLIND_INSTDIR/etc/base-files.mailsymlink
+
+if [ "$1" = "configure" ] && [ "$2" != "" ]; then
+  if [ -f $DPKG_SLIND_INSTDIR/etc/motd ]; then
+    oldmd=`awk 'NR > 2' $DPKG_SLIND_INSTDIR/etc/motd | md5sum | awk '{print $1}'`
+    newmd=`awk 'NR > 2' $DPKG_SLIND_INSTDIR/usr/share/base-files/motd | md5sum | awk '{print $1}'`
+    if [ "$oldmd" != "$newmd" ]; then
+      if grep -q "$oldmd" $DPKG_SLIND_INSTDIR/usr/share/base-files/motd.md5sums; then
+        awk 'NR <= 2' $DPKG_SLIND_INSTDIR/etc/motd > $DPKG_SLIND_INSTDIR/etc/motd.new
+        awk 'NR > 2' $DPKG_SLIND_INSTDIR/usr/share/base-files/motd >> $DPKG_SLIND_INSTDIR/etc/motd.new
+        mv $DPKG_SLIND_INSTDIR/etc/motd $DPKG_SLIND_INSTDIR/etc/motd.old
+        mv $DPKG_SLIND_INSTDIR/etc/motd.new $DPKG_SLIND_INSTDIR/etc/motd
+      fi
+    fi
+  fi
+fi

@@ -1,0 +1,18 @@
+Source: base-files
+Section: base
+Priority: required
+Maintainer: Vartan Khachaturov <vartan.khachaturov@siemens.com>
+Standards-Version: 3.6.2
+
+Package: base-files
+Provides: base
+Architecture: any
+Depends: slind-virtual-awk, base-passwd (>= 2.0.3.4)
+Essential: yes
+Priority: required
+Replaces: base, miscutils
+Description: Slind base system miscellaneous files
+ This package contains the basic filesystem hierarchy of a Slind system, and
+ several important miscellaneous files, such as /etc/slind_version,
+ /etc/host.conf, /etc/issue, /etc/motd, /etc/profile, /etc/nsswitch.conf,
+ and others.
