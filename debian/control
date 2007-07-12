@@ -1,7 +1,7 @@
 Source: base-files
-Section: base
+Section: core
 Priority: required
-Maintainer: Vartan Khachaturov <vartan.khachaturov@siemens.com>
+Maintainer: Vartan Khachaturov <wart@slind.org>
 Standards-Version: 3.6.2
 
 Package: base-files

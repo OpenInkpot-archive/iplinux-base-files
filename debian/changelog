@@ -1,3 +1,10 @@
+base-files (3.1.6.slind4) unstable; urgency=low
+
+  * Change section field to 'core'. This is SLIND.
+  * Update maintainer email.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Thu, 12 Jul 2007 13:45:09 +0400
+
 base-files (3.1.6.slind3) testing; urgency=low
 
   * Testing prerelease.
