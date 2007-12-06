@@ -1,3 +1,9 @@
+base-files (3.1.6.slind5) unstable; urgency=low
+
+  * Added cross build-dependency.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Thu,  6 Dec 2007 17:40:29 +0300
+
 base-files (3.1.6.slind4) unstable; urgency=low
 
   * Change section field to 'core'. This is SLIND.

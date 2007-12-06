@@ -2,6 +2,7 @@ Source: base-files
 Section: core
 Priority: required
 Maintainer: Vartan Khachaturov <wart@slind.org>
+XCS-Cross-Build-Depends: cross-toolchain
 Standards-Version: 3.6.2
 
 Package: base-files
