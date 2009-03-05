@@ -1,3 +1,9 @@
+base-files (5.0.ip1) asimov; urgency=low
+
+  * Adapted to IPlinux.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 05 Mar 2009 17:04:31 +0600
+
 base-files (5.0) unstable; urgency=medium
 
   * Changed issue, issue.net and debian_version to read "squeeze/sid".
