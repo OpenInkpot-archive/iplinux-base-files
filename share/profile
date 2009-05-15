@@ -7,13 +7,11 @@ else
   PATH="/usr/local/bin:/usr/bin:/bin:/usr/games"
 fi
 
-if [ "$PS1" ]; then
-  if [ "`id -u`" -eq 0 ]; then
-    PS1='# '
-  else
-    PS1='$ '
-  fi
+if [ -z "$PS1" ]; then
+  PS1='\u@\h:\w \$ '
 fi
+
+alias ls='ls --color -F'
 
 export PATH
 
