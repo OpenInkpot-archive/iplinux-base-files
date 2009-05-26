@@ -1,3 +1,9 @@
+base-files (5.0.ip4) asimov; urgency=low
+
+  * Oops. Added base-passwd dependency back. Breaks bootstrap.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Wed, 27 May 2009 01:28:56 +0700
+
 base-files (5.0.ip3) asimov; urgency=low
 
   * Remove base-passwd dependency: it's useless yet.
