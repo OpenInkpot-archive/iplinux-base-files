@@ -6,7 +6,7 @@ Maintainer: Mikhail Gusarov <dottedmag@dottedmag.net>
 Package: base-files
 Architecture: any
 Pre-Depends: awk
-Depends: base-passwd (>= 2.0.3.4)
+Depends:
 Description: IPlinux base system miscellaneous files
  This package contains the basic filesystem hierarchy of a IPlinux system, and
  several important miscellaneous files, such as /etc/iplinux_version,
