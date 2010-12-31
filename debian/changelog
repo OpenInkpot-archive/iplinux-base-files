@@ -1,3 +1,9 @@
+base-files (5.0.ip5) zelazny; urgency=low
+
+  * Remove unused directories from the package (#872)
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Fri, 31 Dec 2010 19:48:19 +0100
+
 base-files (5.0.ip4) asimov; urgency=low
 
   * Oops. Added base-passwd dependency back. Breaks bootstrap.
