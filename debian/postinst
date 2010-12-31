@@ -28,24 +28,10 @@ if [ "$1" = "configure" ] && [ "$2" = "" ]; then
   install_from_default /usr/share/base-files/dot.profile   /root/.profile
   install_from_default /usr/share/base-files/profile       /etc/profile
   install_from_default /usr/share/base-files/motd          /etc/motd
-  install_directory srv       755 root
   install_directory opt       755 root
-  install_directory etc/opt   755 root
   install_directory var/opt   755 root
   install_directory media     755 root
   install_directory var/mail 2775 mail
-
-  install_local_dir /usr/local
-  install_local_dir /usr/local/share
-  install_local_dir /usr/local/share/man
-  install_local_dir /usr/local/bin
-  install_local_dir /usr/local/games
-  install_local_dir /usr/local/lib
-  install_local_dir /usr/local/include
-  install_local_dir /usr/local/sbin
-  install_local_dir /usr/local/src
-  install_local_dir /usr/local/etc
-  ln -sf share/man /usr/local/man
 
   if [ ! -f /var/log/wtmp ]; then
     echo -n>/var/log/wtmp

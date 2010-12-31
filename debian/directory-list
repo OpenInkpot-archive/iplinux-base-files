@@ -1,5 +1,4 @@
 bin
-boot
 dev
 etc
 etc/default
@@ -13,13 +12,10 @@ sbin
 tmp
 usr
 usr/bin
-usr/include
 usr/lib
 usr/sbin
 usr/share
 usr/share/dict
-usr/share/man
-usr/share/misc
 var
 var/backups
 var/cache

@@ -18,7 +18,7 @@ binary-arch: build
 	cd debian && install -m 644 conffiles tmp/DEBIAN
 	cd debian/tmp && install -d `cat ../directory-list`
 	install -p -m 644 share/* debian/tmp/usr/share/base-files
-	install -p -m 644 etc/* debian/tmp/etc
+	cp -a etc/* debian/tmp/etc
 ifeq ($(DEB_HOST_GNU_SYSTEM),gnu)
 	rmdir debian/tmp/proc
 endif
