@@ -24,10 +24,8 @@ ifeq ($(DEB_HOST_GNU_SYSTEM),gnu)
 endif
 	install -p -m 644 etc/motd debian/tmp/usr/share/base-files/motd
 	chown -R root:root debian/tmp
-	cd debian/tmp && chown root:staff   var/local
 	cd debian/tmp && chmod 755  `find . -type d`
 	cd debian/tmp && chmod 1777 `cat ../1777-dirs`
-	cd debian/tmp && chmod 2775 `cat ../2775-dirs`
 	dpkg-gencontrol -isp
 	dpkg --build debian/tmp ..
 
