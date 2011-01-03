@@ -1,3 +1,10 @@
+base-files (5.0.ip6) zelazny; urgency=low
+
+  * Remove /var/backups, /var/local, /var/spool
+  * Add /sys back. Oops.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Mon, 03 Jan 2011 14:21:32 +0100
+
 base-files (5.0.ip5) zelazny; urgency=low
 
   * Remove unused directories from the package (#872)
