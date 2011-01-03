@@ -29,9 +29,7 @@ if [ "$1" = "configure" ] && [ "$2" = "" ]; then
   install_from_default /usr/share/base-files/profile       /etc/profile
   install_from_default /usr/share/base-files/motd          /etc/motd
   install_directory opt       755 root
-  install_directory var/opt   755 root
   install_directory media     755 root
-  install_directory var/mail 2775 mail
 
   if [ ! -f /var/log/wtmp ]; then
     echo -n>/var/log/wtmp
